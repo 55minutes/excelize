@@ -10,7 +10,7 @@ version_config.readfp(open(
     os.path.join(os.path.dirname(__file__), 'VERSION.cfg')))
 VERSION = version_config.get('version', 'working')
 
-DISTRIBUTION_NAME = 'Excelizer'
+DISTRIBUTION_NAME = 'excelize'
 
 SHORT_DESCRIPTION = 'Convenience wrapper for xlwt'
 if os.path.exists("README.md"):
@@ -54,8 +54,7 @@ setup(
         ]
     },
 
-    package_dir={'': 'src'},
-    packages=find_packages('src'),
+    packages=find_packages(),
     zip_safe=False,
     include_package_data=True,
 
@@ -63,5 +62,5 @@ setup(
         ('https://github.com/55minutes/clt-utils/archive/master.tar.gz'
          '#egg=clt-utils-1.0.0'),
     ],
-    install_requires=['clt-utils', 'unicodecsv', 'xlwt'],
+    install_requires=['clt-utils', 'distribute', 'unicodecsv', 'xlwt'],
 )
