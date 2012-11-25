@@ -4,6 +4,7 @@ from ConfigParser import SafeConfigParser
 from setuptools import setup, find_packages
 import codecs
 import os
+import sys
 
 version_config = SafeConfigParser()
 version_config.readfp(open(
@@ -19,7 +20,11 @@ else:
     LONG_DESCRIPTION = SHORT_DESCRIPTION
 
 PROJECT_URL = 'https://github.com/55minutes/excelize'
-DOWNLOAD_URL = '{}/archive/master.tar.gz'.format(PROJECT_URL)
+DOWNLOAD_URL = '{0}/archive/master.tar.gz'.format(PROJECT_URL)
+
+REQUIRES = ['clt-utils', 'distribute', 'unicodecsv', 'xlwt']
+if sys.version_info < (2, 7):
+    REQUIRES.append('argparse')
 
 # Setup the project directory
 setup(
@@ -62,5 +67,5 @@ setup(
         ('https://github.com/55minutes/clt-utils/archive/master.tar.gz'
          '#egg=clt-utils-1.0.0'),
     ],
-    install_requires=['clt-utils', 'distribute', 'unicodecsv', 'xlwt'],
+    install_requires=REQUIRES,
 )
