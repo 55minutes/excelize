@@ -58,15 +58,12 @@ class Sheet(object):
             for y, v in enumerate(row):
                 self.worksheet.write(x, y, v)
 
-    def _write(self):
+    def write(self):
         self.write_title()
         self.write_column_headers()
-        self.write_rows()
-
-    def write(self):
         if not self.rows:
             return
-        self._write()
+        self.write_rows()
 
 
 class Column(object):
