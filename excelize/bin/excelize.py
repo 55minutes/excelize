@@ -42,10 +42,12 @@ def main():
     for sh in json.load(open(args.json, encoding='utf-8')):
         columns = None
         if sh.get('columns', None):
-            # TODO: Naive columns!
-            columns = quick_columns(*[c['name'] for c in sh['columns']])
-        debug([c.name for c in columns])
-        # TODO: Naive rows!
+            columns = quick_columns(
+                *[(c['name'], c['is_date?']) for c in sh['columns']])
+        debug([(c.name, c.is_date) for c in columns])
+        # TODO: Naive rows! We need to take into consideration what the
+        # incoming date format is and translate that to a proper datetime
+        # object.
         rows = csv.reader(open(sh['data_path']), encoding='utf-8')
         sheet = Sheet(sh['name'], rows, title=sh.get('title', None),
                       columns=columns)

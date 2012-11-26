@@ -1,7 +1,7 @@
 import xlwt
 
 BOLD_STYLE = xlwt.easyxf('font: bold on')
-DATE_STYLE = xlwt.easyxf(num_format_str='mm/dd/yyyy')
+DATE_STYLE = xlwt.easyxf(num_format_str='yyyy-mm-dd')
 
 
 class Book(object):
@@ -56,7 +56,10 @@ class Sheet(object):
     def write_rows(self):
         for x, row in enumerate(self.rows, self.next_blank_row):
             for y, v in enumerate(row):
-                self.worksheet.write(x, y, v)
+                if self.columns[y].is_date:
+                    self.worksheet.write(x, y, v, DATE_STYLE)
+                else:
+                    self.worksheet.write(x, y, v)
 
     def write(self):
         self.write_title()
