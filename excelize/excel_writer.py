@@ -56,7 +56,7 @@ class Sheet(object):
     def write_rows(self):
         for x, row in enumerate(self.rows, self.next_blank_row):
             for y, v in enumerate(row):
-                if self.columns[y].is_date:
+                if self.columns and self.columns[y].is_date:
                     self.worksheet.write(x, y, v, DATE_STYLE)
                 else:
                     self.worksheet.write(x, y, v)
