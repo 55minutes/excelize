@@ -43,7 +43,8 @@ def main():
         columns = None
         if sh.get('columns', None):
             columns = quick_columns(
-                *[(c['name'], c['is_date?']) for c in sh['columns']])
+                *[(c['name'], c.get('is_date?', False)) for c in sh['columns']]
+            )
         debug([(c.name, c.is_date) for c in columns])
         # TODO: Naive rows! We need to take into consideration what the
         # incoming date format is and translate that to a proper datetime
