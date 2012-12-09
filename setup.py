@@ -13,7 +13,7 @@ VERSION = version_config.get('version', 'working')
 
 DISTRIBUTION_NAME = 'excelize'
 
-SHORT_DESCRIPTION = 'Convenience wrapper for xlwt'
+SHORT_DESCRIPTION = 'Convenience wrapper for openpyxl'
 if os.path.exists("README.md"):
     LONG_DESCRIPTION = codecs.open("README.md", "r", "utf-8").read()
 else:
@@ -22,7 +22,7 @@ else:
 PROJECT_URL = 'https://github.com/55minutes/excelize'
 DOWNLOAD_URL = '{0}/archive/master.tar.gz'.format(PROJECT_URL)
 
-REQUIRES = ['clt-utils', 'distribute', 'unicodecsv', 'xlwt']
+REQUIRES = ['clt-utils', 'distribute', 'openpyxl', 'unicodecsv']
 if sys.version_info < (2, 7):
     REQUIRES.append('argparse')
 
