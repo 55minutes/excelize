@@ -20,7 +20,7 @@
             }
         ],
         "data_path":
-        "/Users/george/src/etsidata-utils/test_data/test.csv",
+        "/Users/george/src/excelize/test_data/test.csv",
         "name":
         "Patents"
     }
