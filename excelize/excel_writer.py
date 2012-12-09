@@ -3,19 +3,20 @@ from datetime import datetime
 
 
 class Book(object):
-    def __init__(self, outfile):
-        self.workbook = Workbook()
-        # self.workbook = Workbook()
+    def __init__(self, outfile, optimized_write=False):
+        self.optimized_write = optimized_write
+        self.workbook = Workbook(optimized_write=optimized_write)
         self.outfile = outfile
         self.sheets = []
 
     def add_sheet(self, sheet):
         sheet.book = self
-        if not self.sheets:
+        if not self.optimized_write and not self.sheets:
             sheet._worksheet = self.workbook.get_active_sheet()
             sheet._worksheet.title = sheet.name
         else:
-            sheet._worksheet = self.workbook.create_sheet(sheet.name)
+            sheet._worksheet = self.workbook.create_sheet()
+            sheet._worksheet.title = sheet.name
         self.sheets.append(sheet)
 
     def save(self):
@@ -44,25 +45,38 @@ class Sheet(object):
             self.worksheet.append([self.title])
 
     def render_column_headers(self):
-        x = 0
-        if self.title:
-            x = self.worksheet.get_highest_row() + 1
-        for y, column in enumerate(self.columns or []):
-            cell = self.worksheet.cell(row=x, column=y)
-            cell.value = column.name
-            cell.style.font.bold = True
+        if self.book.optimized_write:
+            if self.title:
+                self.worksheet.append([""])
+            self.worksheet.append([c.name for c in self.columns])
+        else:
+            x = 0
+            if self.title:
+                x = self.worksheet.get_highest_row() + 1
+            for y, column in enumerate(self.columns or []):
+                cell = self.worksheet.cell(row=x, column=y)
+                cell.value = column.name
+                cell.style.font.bold = True
 
     def render_rows(self):
-        for x, row in enumerate(self.rows, self.worksheet.get_highest_row()):
-            for y, v in enumerate(row):
-                if self.columns and self.columns[y].is_date:
-                    cell = self.worksheet.cell(row=x, column=y)
-                    cell.value = datetime.fromtimestamp(
-                        (float(v) - 25569) * 86400
-                    )
-                else:
-                    cell = self.worksheet.cell(row=x, column=y)
-                    cell.value = v
+        if self.book.optimized_write:
+            for row in self.rows:
+                self.worksheet.append(row)
+        else:
+            for x, row in enumerate(self.rows,
+                                    self.worksheet.get_highest_row()):
+                for y, v in enumerate(row):
+                    if self.columns and self.columns[y].is_date:
+                        cell = self.worksheet.cell(row=x, column=y)
+                        # TODO: We can't assume that the incoming format is
+                        #       always going to be an Excel based datetime
+                        # Convert from Excel epoch of days since 1900-01-01
+                        cell.value = datetime.fromtimestamp(
+                            (float(v) - 25569) * 86400
+                        )
+                    else:
+                        cell = self.worksheet.cell(row=x, column=y)
+                        cell.value = v
 
     def render(self):
         self.render_title()
