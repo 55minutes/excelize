@@ -1,22 +1,27 @@
-import xlwt
-
-BOLD_STYLE = xlwt.easyxf('font: bold on')
-DATE_STYLE = xlwt.easyxf(num_format_str='yyyy-mm-dd')
+from openpyxl import Workbook
+from datetime import datetime
 
 
 class Book(object):
     def __init__(self, outfile):
-        self.workbook = xlwt.Workbook(encoding='utf-8')
+        self.workbook = Workbook()
+        # self.workbook = Workbook()
         self.outfile = outfile
         self.sheets = []
 
     def add_sheet(self, sheet):
         sheet.book = self
+        if not self.sheets:
+            sheet._worksheet = self.workbook.get_active_sheet()
+            sheet._worksheet.title = sheet.name
+        else:
+            sheet._worksheet = self.workbook.create_sheet(sheet.name)
         self.sheets.append(sheet)
 
     def save(self):
         for sheet in self.sheets:
-            sheet.write()
+            sheet.render()
+            print(sheet.worksheet.calculate_dimension())
         self.workbook.save(self.outfile)
 
 
@@ -31,42 +36,41 @@ class Sheet(object):
         for p in ('name', 'rows', 'title', 'columns'):
             setattr(self, p, locals()[p])
 
-    def get_worksheet(self):
-        if not hasattr(self, '_worksheet'):
-            self._worksheet = self.book.workbook.add_sheet(self.name)
-
+    @property
+    def worksheet(self):
         return self._worksheet
-    worksheet = property(get_worksheet)
 
-    def get_next_blank_row(self):
-        return max(self.worksheet.rows.keys() or [-1]) + 1
-    next_blank_row = property(get_next_blank_row)
-
-    def write_title(self):
+    def render_title(self):
         if self.title:
-            self.worksheet.write(0, 0, self.title)
+            self.worksheet.append([self.title])
 
-    def write_column_headers(self):
+    def render_column_headers(self):
         x = 0
         if self.title:
-            x = self.next_blank_row + 1
+            x = self.worksheet.get_highest_row() + 1
         for y, column in enumerate(self.columns or []):
-            self.worksheet.write(x, y, column.name, BOLD_STYLE)
+            cell = self.worksheet.cell(row=x, column=y)
+            cell.value = column.name
+            cell.style.font.bold = True
 
-    def write_rows(self):
-        for x, row in enumerate(self.rows, self.next_blank_row):
+    def render_rows(self):
+        for x, row in enumerate(self.rows, self.worksheet.get_highest_row()):
             for y, v in enumerate(row):
                 if self.columns and self.columns[y].is_date:
-                    self.worksheet.write(x, y, v, DATE_STYLE)
+                    cell = self.worksheet.cell(row=x, column=y)
+                    cell.value = datetime.fromtimestamp(
+                        (float(v) - 25569) * 86400
+                    )
                 else:
-                    self.worksheet.write(x, y, v)
+                    cell = self.worksheet.cell(row=x, column=y)
+                    cell.value = v
 
-    def write(self):
-        self.write_title()
-        self.write_column_headers()
+    def render(self):
+        self.render_title()
+        self.render_column_headers()
         if not self.rows:
             return
-        self.write_rows()
+        self.render_rows()
 
 
 class Column(object):
