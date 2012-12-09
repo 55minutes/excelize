@@ -21,7 +21,6 @@ class Book(object):
     def save(self):
         for sheet in self.sheets:
             sheet.render()
-            print(sheet.worksheet.calculate_dimension())
         self.workbook.save(self.outfile)
 
 
