@@ -1,0 +1,27 @@
+[
+    {
+        "columns":
+        [
+            {
+                "is_date?": false,
+                "name": "etsi_app_number"
+            },
+            {
+                "is_date?": false,
+                "name": "etsi_pub_number"
+            },
+            {
+                "is_date?": false,
+                "name": "title"
+            },
+            {
+                "is_date?": true,
+                "name": "date"
+            }
+        ],
+        "data_path":
+        "/Users/george/src/etsidata-utils/test_data/test.csv",
+        "name":
+        "Patents"
+    }
+]
