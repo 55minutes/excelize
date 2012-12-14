@@ -1,4 +1,4 @@
 excelize
 ========
 
-Wrapper around openpyxl to product Excel workbooks
+Wrapper around openpyxl to produce Excel workbooks
