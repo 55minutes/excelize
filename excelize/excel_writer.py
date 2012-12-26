@@ -48,7 +48,7 @@ class Sheet(object):
         if self.book.optimized_write:
             if self.title:
                 self.worksheet.append([""])
-            self.worksheet.append([c.name for c in self.columns])
+            self.worksheet.append([c.name for c in self.columns or []])
         else:
             x = 0
             if self.title:
