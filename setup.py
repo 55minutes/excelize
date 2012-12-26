@@ -64,8 +64,8 @@ setup(
     include_package_data=True,
 
     dependency_links=[
-        ('https://github.com/55minutes/clt-utils/archive/master.tar.gz'
-         '#egg=clt-utils-1.0.0'),
+        ('https://github.com/55minutes/clt-utils/archive/v1.0.1.tar.gz'
+         '#egg=clt-utils-1.0.1'),
     ],
     install_requires=REQUIRES,
 )
