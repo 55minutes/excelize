@@ -1,3 +1,7 @@
+1.1.2 (2012-12-26)
+==================
+* Updated to latest clt-utils 1.0.2
+
 1.1.1 (2012-12-26)
 ==================
 * Updated to latest clt-utils 1.0.1
