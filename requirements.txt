@@ -1,3 +1,3 @@
-git+git://github.com/55minutes/clt-utils.git@v1.0.2#egg=clt-utils
-openpyxl==1.6.1
-unicodecsv==0.9.0
+git+git://github.com/55minutes/clt-utils.git@v1.0.4#egg=clt-utils
+openpyxl==1.8.3
+unicodecsv==0.9.4

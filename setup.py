@@ -22,7 +22,7 @@ else:
 PROJECT_URL = 'https://github.com/55minutes/excelize'
 DOWNLOAD_URL = '{0}/archive/master.tar.gz'.format(PROJECT_URL)
 
-REQUIRES = ['clt-utils', 'distribute', 'openpyxl', 'unicodecsv']
+REQUIRES = ['clt-utils', 'openpyxl', 'unicodecsv']
 if sys.version_info < (2, 7):
     REQUIRES.append('argparse')
 
