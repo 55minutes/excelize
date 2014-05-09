@@ -37,7 +37,7 @@ def main():
 
     env.DEBUG = args.debug
 
-    book = Book(args.xls, optimized_write=True)
+    book = Book(args.xls)
 
     for sh in json.load(open(args.json, encoding='utf-8')):
         columns = None
