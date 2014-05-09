@@ -1,3 +1,8 @@
+1.1.4 (2014-05-08)
+==================
+* Don't use optimized writer (which adds the entire row instead of cell by
+  cell).
+
 1.1.2 (2012-12-26)
 ==================
 * Updated to latest clt-utils 1.0.2
