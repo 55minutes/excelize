@@ -88,7 +88,7 @@ class Sheet(object):
 
 class Column(object):
     # TODO: It would be better if we input a custom format, rather than the
-    # rigid id_date.
+    # rigid is_date.
     def __init__(self, name, is_date=False):
         self.name = name
         self.is_date = is_date
