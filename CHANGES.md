@@ -1,3 +1,7 @@
+1.2.0 (2014-06-15)
+==================
+* Updated to work with openpyxl 2.0.3
+
 1.1.4 (2014-05-08)
 ==================
 * Don't use optimized writer (which adds the entire row instead of cell by

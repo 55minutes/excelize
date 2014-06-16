@@ -19,10 +19,8 @@
                 "name": "date"
             }
         ],
-        "data_path":
-        "/Users/george/src/excelize/test_data/test.csv",
-        "name":
-        "Patents",
+        "data_path": "/Users/george/src/excelize/test_data/test.csv",
+        "name": "Patents",
         "title": "This is a title"
     }
 ]

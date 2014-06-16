@@ -1,5 +1,7 @@
-from openpyxl import Workbook
 from datetime import datetime
+
+from openpyxl import Workbook
+from openpyxl.styles import Font, Style
 
 
 class Book(object):
@@ -52,21 +54,22 @@ class Sheet(object):
         else:
             x = 0
             if self.title:
-                x = self.worksheet.get_highest_row() + 1
-            for y, column in enumerate(self.columns or []):
+                x = self.worksheet.get_highest_row() + 2
+            for y, column in enumerate(self.columns or [], start=1):
                 cell = self.worksheet.cell(row=x, column=y)
                 cell.value = column.name
-                cell.style.font.bold = True
+                cell.style = Style(font=Font(bold=True))
 
     def render_rows(self):
         if self.book.optimized_write:
             for row in self.rows:
                 self.worksheet.append(row)
         else:
-            for x, row in enumerate(self.rows,
-                                    self.worksheet.get_highest_row()):
-                for y, v in enumerate(row):
-                    if self.columns and self.columns[y].is_date:
+            for x, row in enumerate(
+                    self.rows, start=self.worksheet.get_highest_row() + 1
+            ):
+                for y, v in enumerate(row, start=1):
+                    if self.columns and self.columns[y - 1].is_date:
                         cell = self.worksheet.cell(row=x, column=y)
                         # TODO: We can't assume that the incoming format is
                         #       always going to be an Excel based datetime
