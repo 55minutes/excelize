@@ -1,3 +1,8 @@
+1.2.1 (2014-06-29)
+==================
+* Updated to openpyxl 2.0.4
+* Fixed but when sheet has no title
+
 1.2.0 (2014-06-15)
 ==================
 * Updated to work with openpyxl 2.0.3
