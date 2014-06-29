@@ -52,7 +52,7 @@ class Sheet(object):
                 self.worksheet.append([""])
             self.worksheet.append([c.name for c in self.columns or []])
         else:
-            x = 0
+            x = 1
             if self.title:
                 x = self.worksheet.get_highest_row() + 2
             for y, column in enumerate(self.columns or [], start=1):
