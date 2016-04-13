@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from openpyxl import Workbook
-from openpyxl.styles import Font, Style
+from openpyxl.styles import Font
 
 
 class Book(object):
@@ -14,7 +14,7 @@ class Book(object):
     def add_sheet(self, sheet):
         sheet.book = self
         if not self.optimized_write and not self.sheets:
-            sheet._worksheet = self.workbook.get_active_sheet()
+            sheet._worksheet = self.workbook.active
             sheet._worksheet.title = sheet.name
         else:
             sheet._worksheet = self.workbook.create_sheet()
@@ -58,11 +58,11 @@ class Sheet(object):
         else:
             x = 1
             if self.title:
-                x = self.worksheet.get_highest_row() + 2
+                x = self.worksheet.max_row + 2
             for y, column in enumerate(self.columns or [], start=1):
                 cell = self.worksheet.cell(row=x, column=y)
                 cell.value = column.name
-                cell.style = Style(font=Font(bold=True))
+                cell.font = Font(bold=True)
 
     def render_rows(self):
         if self.book.optimized_write:
@@ -70,7 +70,7 @@ class Sheet(object):
                 self.worksheet.append(row)
         else:
             for x, row in enumerate(
-                    self.rows, start=self.worksheet.get_highest_row() + 1
+                    self.rows, start=self.worksheet.max_row + 1
             ):
                 for y, v in enumerate(row, start=1):
                     if self.columns and self.columns[y - 1].is_date:
