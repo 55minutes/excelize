@@ -1,4 +1,4 @@
-1.3.0 (2014-10-31)
+1.3.0 (2016-04-13)
 ==================
 * Allow passing in title as a list to `Sheet.title`
 
