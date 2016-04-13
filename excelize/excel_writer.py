@@ -44,7 +44,11 @@ class Sheet(object):
 
     def render_title(self):
         if self.title:
-            self.worksheet.append([self.title])
+            if not isinstance(self.title, basestring):
+                for title in self.title:
+                    self.worksheet.append([title])
+            else:
+                self.worksheet.append([self.title])
 
     def render_column_headers(self):
         if self.book.optimized_write:
