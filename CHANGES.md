@@ -1,4 +1,8 @@
-1.2.1 (2014-10-31)
+1.3.0 (2014-10-31)
+==================
+* Allow passing in title as a list to `Sheet.title`
+
+1.2.2 (2014-10-31)
 ==================
 * Updated to openpyxl 2.1.2
 
