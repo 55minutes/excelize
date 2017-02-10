@@ -22,7 +22,7 @@ else:
 PROJECT_URL = 'https://github.com/55minutes/excelize'
 DOWNLOAD_URL = '{0}/archive/master.tar.gz'.format(PROJECT_URL)
 
-REQUIRES = ['clt-utils', 'openpyxl', 'unicodecsv']
+REQUIRES = ['clt-utils', 'openpyxl>=2.3,<2.4', 'unicodecsv>=0.14,<0.15']
 if sys.version_info < (2, 7):
     REQUIRES.append('argparse')
 
@@ -64,8 +64,8 @@ setup(
     include_package_data=True,
 
     dependency_links=[
-        ('https://github.com/55minutes/clt-utils/archive/v1.0.2.tar.gz'
-         '#egg=clt-utils-1.0.2'),
+        ('https://github.com/55minutes/clt-utils/archive/v1.0.4.tar.gz'
+         '#egg=clt-utils-1.0.4'),
     ],
     install_requires=REQUIRES,
 )
